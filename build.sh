@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# Выходим, если произошла ошибка
 set -o errexit
 
 pip install -r requirements.txt
