@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}McDonald's{% endblock %}</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark navbar-mcd sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="{% url 'menu:index' %}">M<span style="color:#FFC72C;">🍔</span>Donald's</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item"><a class="nav-link" href="{% url 'menu:index' %}">Главная</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'menu:menu' %}">Меню</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'menu:contacts' %}">Контакты</a></li>
+        {% if user.is_staff %}
+        <li class="nav-item"><a class="nav-link" href="{% url 'menu:product_create' %}">
+          <i class="bi bi-plus-circle"></i> Добавить блюдо</a></li>
+        {% endif %}
+      </ul>
+
+      <ul class="navbar-nav">
+        {% if user.is_authenticated %}
+          <li class="nav-item">
+            <span class="nav-link text-white">
+              <i class="bi bi-person-circle"></i> {{ user.username }}
+            </span>
+          </li>
+          <li class="nav-item">
+            <form method="post" action="{% url 'menu:logout' %}" class="d-inline">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-sm btn-mcd ms-2">Выйти</button>
+            </form>
+          </li>
+        {% else %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'menu:login' %}">Войти</a></li>
+          <li class="nav-item"><a class="btn btn-sm btn-mcd ms-2" href="{% url 'menu:register' %}">Регистрация</a></li>
+        {% endif %}
+        <li class="nav-item">
+          <a href="{% url 'menu:cart' %}" class="btn btn-warning position-relative fw-bold ms-2">
+            <i class="bi bi-cart3"></i> Корзина
+            {% if cart_count %}
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              {{ cart_count }}
+            </span>
+            {% endif %}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+{% if messages %}
+<div class="container mt-3">
+  {% for m in messages %}
+  <div class="alert alert-{{ m.tags|default:'info' }} alert-dismissible fade show">
+    {{ m }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% block content %}{% endblock %}
+
+<footer class="mt-5 py-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <h5 class="fw-bold">McDonald's</h5>
+        <p class="mb-0">Вкусно и быстро — с 1940 года</p>
+      </div>
+      <div class="col-md-4 mb-3">
+        <h6 class="fw-bold">Контакты</h6>
+        <p class="mb-1"><i class="bi bi-telephone"></i> +996 676 767 676</p>
+        <p class="mb-1"><i class="bi bi-envelope"></i> info@beefburgers.kg</p>
+        <p class="mb-0"><i class="bi bi-geo-alt"></i> г. Бишкек, ул. Анкара, 379/1</p>
+      </div>
+      <div class="col-md-4 mb-3">
+  <h6 class="fw-bold">Мы в соцсетях</h6>
+  <a href="#" class="text-white me-3 fs-5" title="Telegram"><i class="bi bi-telegram"></i></a>
+  <a href="#" class="text-white me-3 fs-5" title="Instagram"><i class="bi bi-instagram"></i></a>
+  <a href="#" class="text-white me-3 fs-5" title="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+
+  <!-- 2ГИС -->
+  <a href="https://2gis.kg/bishkek/firm/70000001032932569?m=74.599613%2C42.857257%2F20.32"
+     target="_blank"
+     rel="noopener"
+     class="text-white fs-5"
+     title="Мы на 2ГИС">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+         viewBox="0 0 24 24" style="vertical-align:-2px;">
+      <path d="M12 2C7.6 2 4 5.6 4 10c0 5.5 8 12 8 12s8-6.5 8-12c0-4.4-3.6-8-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+    </svg>
+  </a>
+</div>    </div>
+    <hr class="border-light">
+    <p class="text-center mb-0">© 2026 McDonald's Clone. Все права защищены.</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

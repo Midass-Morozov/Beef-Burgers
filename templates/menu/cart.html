@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Корзина{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <h1>🛒 Корзина</h1>
+
+  {% if items %}
+  <table class="table mt-4 align-middle">
+    <thead>
+      <tr><th>Блюдо</th><th>Кол-во</th><th>Цена</th><th>Сумма</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for item in items %}
+      <tr>
+        <td>{{ item.product.name }}</td>
+        <td>{{ item.qty }}</td>
+        <td>{{ item.product.price }} ₽</td>
+        <td>{{ item.subtotal }} ₽</td>
+        <td>
+          <a href="{% url 'menu:cart_remove' item.product.pk %}" class="btn btn-sm btn-outline-danger">
+            <i class="bi bi-x-lg"></i>
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr>
+        <th colspan="3" class="text-end">Итого:</th>
+        <th colspan="2">{{ total }} ₽</th>
+      </tr>
+    </tfoot>
+  </table>
+  <a href="{% url 'menu:checkout' %}" class="btn btn-warning btn-lg fw-bold">Оформить доставку</a>
+  {% else %}
+  <p class="mt-4">Корзина пуста. <a href="{% url 'menu:menu' %}">Перейти в меню</a></p>
+  {% endif %}
+</div>
+{% endblock %}

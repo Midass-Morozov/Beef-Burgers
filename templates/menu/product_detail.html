@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}{{ product.name }} — McDonald's{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <a href="{% url 'menu:menu' %}" class="btn btn-outline-dark btn-sm mb-3">← Назад в меню</a>
+  <div class="row">
+    <div class="col-md-6">
+      {% if product.image %}
+      <img src="{{ product.image.url }}" class="img-fluid rounded shadow" alt="{{ product.name }}">
+      {% endif %}
+    </div>
+    <div class="col-md-6">
+      <h1 class="fw-bold">{{ product.name }}</h1>
+      <p class="text-muted">{{ product.category.name }}</p>
+      <p class="fs-5">{{ product.description }}</p>
+      <div class="fs-3 fw-bold my-3" style="color:#DA291C;">{{ product.price }} ₽</div>
+      <a href="{% url 'menu:cart_add' product.pk %}" class="btn btn-warning btn-lg fw-bold">
+        <i class="bi bi-cart-plus"></i> Добавить в корзину
+      </a>
+
+      {% if user.is_staff %}
+      <div class="mt-4">
+        <a href="{% url 'menu:product_update' product.pk %}" class="btn btn-outline-primary btn-sm">
+          <i class="bi bi-pencil"></i> Редактировать
+        </a>
+        <a href="{% url 'menu:product_delete' product.pk %}" class="btn btn-outline-danger btn-sm">
+          <i class="bi bi-trash"></i> Удалить
+        </a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

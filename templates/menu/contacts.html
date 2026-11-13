@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Контакты — McDonald's{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <h1 class="fw-bold mb-4" style="color:#DA291C;">Контакты</h1>
+
+  <div class="row">
+    <div class="col-md-5 mb-4">
+      <h5>Наш адрес</h5>
+      <p><i class="bi bi-geo-alt"></i> г. Бишкек, ул. ​​Анкара, 379/1</p>
+      <h5>Телефон</h5>
+      <p><i class="bi bi-telephone"></i> +996 676 767 676</p>
+      <h5>Email</h5>
+      <p><i class="bi bi-envelope"></i> info@beefburgers.kg</p>
+      <h5>Часы работы</h5>
+      <p><i class="bi bi-clock"></i> Ежедневно с 10:00 до 23:00</p>
+    </div>
+
+    <div class="col-md-7">
+      <h5 class="mb-3">Мы на карте 2ГИС</h5>
+      <div id="map-2gis" class="text-center p-5 rounded" style="background:#FFF3E0; border:2px dashed #FF6B00;">
+  <i class="bi bi-geo-alt-fill" style="font-size:4rem; color:#FF6B00;"></i>
+  <h4 class="mt-3">Мы на карте 2ГИС</h4>
+  <p class="text-muted">г. Бишкек</p>
+  <a href="https://2gis.kg/bishkek/firm/70000001032932569?m=74.599613%2C42.857257%2F20.32"
+     target="_blank"
+     rel="noopener"
+     class="btn btn-mcd btn-lg">
+    <i class="bi bi-map"></i> Открыть в 2ГИС
+  </a>
+</div>    </div>
+  </div>
+</div>
+{% endblock %}
